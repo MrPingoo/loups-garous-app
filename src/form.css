@@ -1,8 +1,11 @@
+/* Importation de la police Outfit */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
 /* Fond de la page */
 body {
-    background: #e0d3af;
-    font-family: 'Papyrus', fantasy;
-    color: #3E2A14;
+    background: #282a3a;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -14,18 +17,13 @@ body {
 /* Conteneur de connexion avec effet parchemin */
 .login-container {
     width: 400px;
-    background: linear-gradient(to bottom, #f9f5e3, #e5d8b6);
-    border: 8px solid #5A3E1B;
-    border-radius: 15px;
     padding: 20px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), 5px 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Titre */
 .login-title {
-    font-size: 28px;
+    font-size: 36px;
     font-weight: bold;
-    color: #5A3E1B;
     margin-bottom: 15px;
 }
 
@@ -34,54 +32,83 @@ body {
     width: 90%;
     padding: 10px;
     margin: 10px 0;
-    border: 3px solid #5A3E1B;
-    background: #fff8dc;
-    font-family: 'Papyrus', fantasy;
+    border: 0.5px solid rgba(0, 0, 0, 0.5);
+    background: #ffffff;
+    font-family: 'Outfit', sans-serif;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 8px;
     outline: none;
-    text-align: center;
-    color: #3E2A14;
+}
+
+.email-label {
+    font-size: 16px;
+    color: #ffffff;
+    text-align: left;
+    padding-left: 10px;
+    display: block;
+}
+
+.password-label {
+    font-size: 16px;
+    color: #ffffff;
+    text-align: left;
+    margin-top: 10px;
+    padding-left: 10px;
+    display: block;
 }
 
 .login-form input:focus {
-    border-color: #c29d68;
-    background: #fff3c4;
+    background: #8da1b9;
+    color: #ffffff;
 }
 
-/* Bouton de connexion */
-.login-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background: linear-gradient(to bottom, #a67c52, #7a5731);
-    border: 3px solid #3E2A14;
-    font-size: 18px;
-    font-weight: bold;
-    color: #FFD700;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 5px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.login-button:hover {
-    background: #5A3E1B;
-    color: #fff;
-}
 
 /* Lien oublié mot de passe */
 .forgot-password {
     margin-top: 10px;
     display: block;
-    color: #5A3E1B;
-    font-size: 14px;
-    text-decoration: none;
-    font-style: italic;
+    text-align: left;
+    padding-left: 10px;
+    color: #ffffff;
+    font-size: 13px;
+    text-decoration:underline;
 }
 
 .forgot-password:hover {
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+/* Bouton de connexion */
+.login-button {
+    padding: 10px 15px;
+    margin-top: 30px;
+    background: #C69749;
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    border: none;
+}
+
+.login-button:hover {
+    background: #735F32;
+    color: #fff;
+}
+
+/* Lien register */
+.new-account {
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 13px;
+    text-decoration:underline;
+}
+
+.forgot-password:hover {
+    text-decoration: none;
 }
 
 
