@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+.game {
+    background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+}
+.game h1 {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 5rem;
+    color: #FFD700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.game h3 {
+    color: #FFD700;
+}
+.container {
+    top: 8vw;
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 3rem;
+    background: #43291F;
+    color: #FFD700;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 3px solid #A67C52;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.container p {
+    font-size: 2rem;
+    margin: 0px;
+}
+
+.player-list {
+    list-style: none;
+    padding: 0;
+}
+.player-list li {
+    padding: 10px;
+    background: #444;
+    margin: 5px;
+    border-radius: 5px;
+}
+.game button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+    background: #ffcc00;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.chatbox {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 300px;
+    background: rgba(51, 51, 51, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    z-index: 2;
+}
+.chatbox textarea {
+    width: 100%;
+    height: 100px;
+    background: #444;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+}
+.chatbox button {
+    width: 100%;
+    margin-top: 5px;
+}
+.chat-messages {
+    max-height: 200px;
+    overflow-y: auto;
+    background: #222;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+.clock {
+    font-family: 'MedievalSharp', cursive;
+    font-size: 3rem;
+    background: #43291F;
+    color: #FFD700;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 3px solid #A67C52;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    width: 200px !important;
+    float: right;
+}
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    background-image: url('./assets/images/background-day.png');
+}
+
+/* Style de la zone de chat */
+.chat-box {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 50vw; /* Moitié de la largeur de l'écran */
+    height: 50vh; /* Moitié de la hauteur de l'écran */
+    background: #5A3E1B;
+    background-size: cover;
+    border: 10px solid #5A3E1B; /* Bordure en bois */
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    font-family: 'Papyrus', fantasy;
+    color: #2C1608;
+    overflow: hidden;
+}
+
+/* Style des onglets */
+.chat-tabs {
+    display: flex;
+    background: #5A3E1B;
+    background-size: cover;
+    border-bottom: 5px solid #5A3E1B;
+}
+
+.chat-tabs div {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-right: 2px solid #3E2A14;
+    font-weight: bold;
+    color: #E0C097;
+}
+
+.chat-tabs div:last-child {
+    border-right: none;
+}
+
+.chat-tabs div.active {
+    background: #5A3E1B;
+    color: #FFD700;
+    font-size: 1.1em;
+}
+
+/* Zone des messages */
+.chat-content {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 16px;
+    height: calc(100% - 60px);
+    background: #F5E1C0;
+}
+
+.chat-content p {
+    margin: 0px;
+    float: left;
+}
+
+.chat-content .player {
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.chat-content .phase {
+    font-style: italic;
+    color: #C29D68;
+}
+
+/* Barre d'entrée */
+.chat-input {
+    display: flex;
+    border-top: 5px solid #5A3E1B;
+    background: #F5E1C0;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-family: 'Papyrus', fantasy;
+    font-size: 16px;
+    color: #2C1608;
+}
+
+.chat-input button {
+    background: #5A3E1B;
+    color: #FFD700;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Papyrus', fantasy;
+}
+
+.chat-input button:hover {
+    background: #3E2A14;
+}
+
+/* Zone de la carte du jeu */
+.game-map {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 185px; /* Largeur de 30% de l'écran */
+    height: 185px; /* Hauteur de 40% de l'écran */
+    background: url('./assets/images/hunter.webp') no-repeat center center;
+    background-size: cover;
+    border: 3px solid #5A3E1B; /* Bordure en bois */
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Conteneur des icônes */
+.icons-container {
+    display: flex;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    border-radius: 8px;
+    border: 3px solid rgba(0, 0, 0, 1); /* Bordure en bois */
+}
+
+/* Icônes */
+.icon {
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 1); /* Bordure en bois */
+}
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+/* Icônes spécifiques */
+.icon-werewolf { background-image: url('./assets/images/icons/crown.jpg'); }
+.icon-villager { background-image: url('./assets/images/icons/heart.jpg'); }
+.icon-seer { background-image: url('./assets/images/icons/potion_m.jpg'); }
+.icon-hunter { background-image: url('./assets/images/icons/potion_v.jpg'); }
+
+/* Zone du tableau des joueurs */
+.player-table {
+    background: #5A3E1B;
+    border: 10px solid #5A3E1B;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    font-family: 'Papyrus', fantasy;
+    color: #2C1608;
+    text-align: center;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    width: 43vw; /* Moitié de la largeur de l'écran */
+    height: 48vh; /* Moitié de la hauteur de l'écran */
+    overflow-y: auto;
+}
+
+/* Style du tableau */
+.player-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.player-table th, .player-table td {
+    border: 3px solid #5A3E1B;
+    padding: 10px;
+    text-align: center;
+}
+
+.player-table th {
+    background-size: cover;
+    color: #FFD700;
+    font-size: 1.1em;
+}
+
+.player-table td {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* Icône de statut (croix rouge) */
+.status-icon {
+    width: 40px;
+    height: 40px;
+    background: url('./assets/images/loup-garou-dos.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* Croix CSS seulement si la classe eliminated est ajoutée */
+.status-icon.eliminated::before,
+.status-icon.eliminated::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    height: 8%;
+    background: darkred;
+    transform-origin: center;
+}
+
+.status-icon.eliminated::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.status-icon.eliminated::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
