@@ -17,7 +17,7 @@ function Board({players, setPlayers}) {
                         <tr key={index}>
                             <td>{player.name}</td>
                             <td>
-                                <div className={`status-icon ${!player.alive ? "eliminated" : ""}`}></div>
+                                <div className={`status-icon ${!player.alive ? "eliminated player-" + player.roleIdentifier : ""}`}></div>
                             </td>
                         </tr>
                     ))}
