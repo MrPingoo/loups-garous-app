@@ -89,9 +89,12 @@
     border-radius: 5px;
     margin-bottom: 5px;
 }
+.clock-outer {
+    padding: 10px;
+}
 .clock {
     font-family: 'MedievalSharp', cursive;
-    font-size: 3rem;
+    font-size: 2rem;
     background: #43291F;
     color: #FFD700;
     padding: 20px;
@@ -112,6 +115,10 @@
     background-position: center;
     z-index: -1;
     background-image: url('./assets/images/background-day.png');
+}
+
+.background-night {
+    background-image: url('./assets/images/background-night.png');
 }
 
 /* Style de la zone de chat */
@@ -235,6 +242,38 @@
     align-items: center;
     padding: 10px;
 }
+.player-chasseur {
+    background: url('./assets/images/chasseur.webp') no-repeat center center;
+    background-size: cover;
+}
+.player-voyante {
+    background: url('./assets/images/voyante.png') no-repeat center center;
+    background-size: cover;
+}
+.player-cupidon {
+    background: url('./assets/images/cupidon.png') no-repeat center center;
+    background-size: cover;
+}
+.player-loup {
+    background: url('./assets/images/loup.png') no-repeat center center;
+    background-size: cover;
+}
+.player-petitefille {
+    background: url('./assets/images/petitefille.png') no-repeat center center;
+    background-size: cover;
+}
+.player-sorciere {
+    background: url('./assets/images/sorciere.png') no-repeat center center;
+    background-size: cover;
+}
+.player-voleur {
+    background: url('./assets/images/voleur.png') no-repeat center center;
+    background-size: cover;
+}
+.player-undefined {
+    background: url('./assets/images/undefined.png') no-repeat center center;
+    background-size: cover;
+}
 
 /* Conteneur des icônes */
 .icons-container {
@@ -262,10 +301,10 @@
 }
 
 /* Icônes spécifiques */
-.icon-werewolf { background-image: url('./assets/images/icons/crown.jpg'); }
-.icon-villager { background-image: url('./assets/images/icons/heart.jpg'); }
-.icon-seer { background-image: url('./assets/images/icons/potion_m.jpg'); }
-.icon-hunter { background-image: url('./assets/images/icons/potion_v.jpg'); }
+.icon-major { background-image: url('./assets/images/icons/crown.jpg'); }
+.icon-lovers { background-image: url('./assets/images/icons/heart.jpg'); }
+.icon-death-potion { background-image: url('./assets/images/icons/potion_m.jpg'); }
+.icon-life-potion { background-image: url('./assets/images/icons/potion_v.jpg'); }
 
 /* Zone du tableau des joueurs */
 .player-table {
@@ -311,7 +350,7 @@
 .status-icon {
     width: 40px;
     height: 40px;
-    background: url('./assets/images/loup-garou-dos.png') no-repeat center center;
+    background: url('./assets/images/undefined.png') no-repeat center center;
     background-size: cover;
     position: relative;
     cursor: pointer;

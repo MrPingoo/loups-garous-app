@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-function Clock() {
+function Clock({isNight, hours, minutes}) {
+
     return (
-        <>
-            {/* Zone de Chat */}
-            <div className="clock" id="clock">00:00</div>
-        </>
+        <div className="clock-outer">
+            <div className="clock">
+                {isNight ? "🌙" : "☀️"} - {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}
+            </div>
+        </div>
     );
 }
 

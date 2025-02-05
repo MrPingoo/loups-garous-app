@@ -1,15 +1,15 @@
 import React from "react";
 
-function Player() {
+function Player({me}) {
     return (
         <>
             {/* Player */}
-            <div className="game-map">
+            <div className={"game-map player-" + (me.roleIdentifier)}>
                 <div className="icons-container">
-                    <div className="icon icon-werewolf" title="Loup-Garou"></div>
-                    <div className="icon icon-villager" title="Villageois"></div>
-                    <div className="icon icon-seer" title="Voyante"></div>
-                    <div className="icon icon-hunter" title="Chasseur"></div>
+                    <div className={"icon " + (me.options.major ? 'icon-major' : "")} title="Major"></div>
+                    <div className={"icon " + (me.options.lovers ? 'icon-lovers' : "")} title="Lovers"></div>
+                    <div className={"icon " + (me.options.deathPotion ? 'icon-death-potion' : "")} title="Death Potion"></div>
+                    <div className={"icon " + (me.options.lifePotion ? 'icon-life-potion' : "")} title="Life Potion"></div>
                 </div>
             </div>
         </>

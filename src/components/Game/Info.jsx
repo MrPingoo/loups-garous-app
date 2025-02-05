@@ -1,12 +1,11 @@
 import React from "react";
 
-function Info() {
+function Info({currentInfo}) {
     return (
         <>
             {/* Zone d'info */}
             <div className="container">
-                <p>Infos ...</p>
-                <p>Et une autre ligne</p>
+                <p>{currentInfo}.</p>
             </div>
         </>
     );

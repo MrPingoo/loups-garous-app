@@ -1,6 +1,6 @@
 import React from "react";
 
-function Board() {
+function Board({players, setPlayers}) {
     return (
         <>
             {/* Tableau des joueurs */}
@@ -13,54 +13,14 @@ function Board() {
                         </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Hugo</td>
-                        <td>
-                        <div className="status-icon eliminated"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Morgane</td>
+                    {players.map((player, index) => (
+                        <tr key={index}>
+                            <td>{player.name}</td>
                             <td>
-                                <div className="status-icon"></div>
+                                <div className={`status-icon ${!player.alive ? "eliminated" : ""}`}></div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>LoupNoir</td>
-                            <td>
-                                <div className="status-icon"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>OmbreSilencieuse</td>
-                            <td>
-                                <div className="status-icon"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Hugo</td>
-                            <td>
-                                <div className="status-icon"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Morgane</td>
-                            <td>
-                                <div className="status-icon"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>LoupNoir</td>
-                            <td>
-                                <div className="status-icon"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>OmbreSilencieuse</td>
-                            <td>
-                                <div className="status-icon"></div>
-                            </td>
-                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>
