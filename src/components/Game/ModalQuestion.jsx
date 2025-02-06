@@ -1,9 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
-function ModalQuestion({ isOpen, question, players, maxSelectable, onClose, onConfirm}) {
+function ModalQuestion({ isOpen, question, players, minSelectable, maxSelectable, onClose, onConfirm }) {
     const [selectedPlayers, setSelectedPlayers] = useState([]);
 
     if (!isOpen) return null; // Ne pas afficher si fermé
+
 
     // Fonction pour gérer la sélection d'un joueur
     const handleSelect = (player) => {
@@ -35,8 +36,12 @@ function ModalQuestion({ isOpen, question, players, maxSelectable, onClose, onCo
                 <div className="modal-actions">
                     <button onClick={onClose}>Annuler</button>
                     <button
-                        onClick={() => onConfirm(selectedPlayers)}
-                        disabled={selectedPlayers.length === 0}
+                        onClick={() => {
+                            if (selectedPlayers.length >= minSelectable) {
+                                onConfirm(selectedPlayers);
+                            }
+                        }}
+                        disabled={selectedPlayers.length < minSelectable}
                     >
                         Valider
                     </button>
