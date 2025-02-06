@@ -55,7 +55,7 @@ function Jeu() {
         { label: "sorciere_kill", question: "Sorcière veut-tu utiliser ta option de mort sur un joueur ?", maxSelectable: 1 },
         { label: "sorciere_save", question: "Sorcière veut-tu utiliser ta option de vie sur le joueur qui vient d'être tué ?", maxSelectable: 1 },
         { label: "cupidon_love", question: "Cupidon choisis deux amoureux ?", maxSelectable: 2 },
-        { label: "voyante_peek", question: "Voyante, choisis une personne pour connaitre sa carte ?", maxSelectable: 1 },
+        { label: "voyante_peek", question: "Voyante, choisis une personne pour prendre sa carte ?", maxSelectable: 1 },
         { label: "chasseur_revenge", question: "Chasseur tu viens de mourir veut-tu tuer une personne ?", maxSelectable: 1 }
     ];
 
