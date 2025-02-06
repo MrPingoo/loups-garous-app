@@ -51,6 +51,7 @@ function Jeu() {
     const [modalCallback, setModalCallback] = useState(null);
     const questionsList = [
         { label: "loup_kill", question: "Qui doit mourir cette nuit ?", maxSelectable: 1 },
+        { label: "villageois_kill", question: "Qui doit mourir aujourd'hui ?", maxSelectable: 1 },
         { label: "voleur_swap", question: "Voleur veux-tu changer de carte avec un autre joueur ?", maxSelectable: 1 },
         { label: "sorciere_kill", question: "Sorcière veut-tu utiliser ta option de mort sur un joueur ?", maxSelectable: 1 },
         { label: "sorciere_save", question: "Sorcière veut-tu utiliser ta option de vie sur le joueur qui vient d'être tué ?", maxSelectable: 1 },
