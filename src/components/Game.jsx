@@ -5,6 +5,7 @@ import Player from "./Game/Player";
 import Info from "./Game/Info";
 import Board from "./Game/Board";
 import Chat from "./Game/Chat";
+import ModalQuestion from "./Game/ModalQuestion";
 
 function Jeu() {
     // État des joueurs : { nom, rôle, vivant, jourDeMort }
@@ -16,7 +17,7 @@ function Jeu() {
     ]);
     const me = { name: "Me", role: "Loup-Garou", roleIdentifier: "loup",alive: true, deathDay: null,
         options: {
-            "major" : true,
+            "major" : false,
             "lovers" : true,
             "deathPotion": true,
             "lifePotion": true
@@ -43,12 +44,48 @@ function Jeu() {
     const minutes = Math.floor((gameTime * 60) % 60);
     const isNight = hours >= 18 || hours < 6;
 
+    // Modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalQuestion, setModalQuestion] = useState("");
+    const [maxSelectable, setMaxSelectable] = useState(1);
+    const [modalCallback, setModalCallback] = useState(null);
+
+    const openModal = (question, max, callback) => {
+        setModalQuestion(question);
+        setMaxSelectable(max);
+        setModalCallback(() => callback);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const openNightModal = () => {
+        openModal("Qui doit mourir cette nuit ?", 1, (selected) => {
+            console.log("Victime sélectionnée :", selected);
+            // Gère la mort du joueur ici
+        });
+    }
+
+
     return (
         <>
             <div className="game">
                 <div className={"background " + (isNight ? 'background-night' : "")} id="background"></div>
                 <Clock hours={hours} minutes={minutes} isNight={isNight} />
-                <Info currentInfo={currentInfo}/>
+                <ModalQuestion
+                    isOpen={isModalOpen}
+                    question={modalQuestion}
+                    players={players.filter(p => p.alive)} // Ne montrer que les vivants
+                    maxSelectable={maxSelectable}
+                    onClose={closeModal}
+                    onConfirm={(selected) => {
+                        if (modalCallback) modalCallback(selected);
+                        closeModal();
+                    }}
+                />
+                <Info openNightModal={openNightModal} currentInfo={currentInfo}/>
                 <Player me={me} />
                 <Board players={players} setPlayers={setPlayers}/>
                 <Chat/>
