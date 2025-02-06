@@ -49,10 +49,26 @@ function Jeu() {
     const [modalQuestion, setModalQuestion] = useState("");
     const [maxSelectable, setMaxSelectable] = useState(1);
     const [modalCallback, setModalCallback] = useState(null);
+    const questionsList = [
+        { label: "loup_kill", question: "Qui doit mourir cette nuit ?", maxSelectable: 1 },
+        { label: "voleur_swap", question: "Voleur veux-tu changer de carte avec un autre joueur ?", maxSelectable: 1 },
+        { label: "sorciere_kill", question: "Sorcière veut-tu utiliser ta option de mort sur un joueur ?", maxSelectable: 1 },
+        { label: "sorciere_save", question: "Sorcière veut-tu utiliser ta option de vie sur le joueur qui vient d'être tué ?", maxSelectable: 1 },
+        { label: "cupidon_love", question: "Cupidon choisis deux amoureux ?", maxSelectable: 2 },
+        { label: "voyante_peek", question: "Voyante, choisis une personne pour connaitre sa carte ?", maxSelectable: 1 },
+        { label: "chasseur_revenge", question: "Chasseur tu viens de mourir veut-tu tuer une personne ?", maxSelectable: 1 }
+    ];
 
-    const openModal = (question, max, callback) => {
-        setModalQuestion(question);
-        setMaxSelectable(max);
+    const openModal = (label, callback) => {
+        const questionData = questionsList.find(q => q.label === label);
+
+        if (!questionData) {
+            console.error(`Question non trouvée pour le label : ${label}`);
+            return;
+        }
+
+        setModalQuestion(questionData.question);
+        setMaxSelectable(questionData.maxSelectable);
         setModalCallback(() => callback);
         setIsModalOpen(true);
     };
@@ -62,12 +78,11 @@ function Jeu() {
     };
 
     const openNightModal = () => {
-        openModal("Qui doit mourir cette nuit ?", 1, (selected) => {
-            console.log("Victime sélectionnée :", selected);
-            // Gère la mort du joueur ici
+        openModal("loup_kill", (selected) => {
+            console.log("Victime choisie :", selected);
+            // Logique de suppression du joueur ici
         });
     }
-
 
     return (
         <>
