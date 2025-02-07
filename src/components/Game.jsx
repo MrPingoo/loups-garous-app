@@ -6,6 +6,38 @@ import Info from "./Game/Info";
 import Board from "./Game/Board";
 import Chat from "./Game/Chat";
 import ModalQuestion from "./Game/ModalQuestion";
+import { rolesConfig } from "./Game/rolesConfig";
+
+const roleNames = {
+    voleur: "Voleur",
+    cupidon: "Cupidon",
+    sorciere: "Sorcière",
+    chasseur: "Chasseur",
+    voyante: "Voyante",
+    loup: "Loup-Garou",
+    villageois: "Villageois"
+};
+
+const assignRoles = (playerNames, numPlayers) => {
+    // Assurer que numPlayers est entre 8 et 12
+    numPlayers = Math.max(8, Math.min(12, numPlayers));
+
+    const availableRoles = [...rolesConfig[numPlayers]];
+
+    // Mélange les rôles pour une attribution aléatoire
+    availableRoles.sort(() => Math.random() - 0.5);
+
+    return playerNames.slice(0, numPlayers).map((name, index) => {
+        const roleIdentifier = availableRoles[index];
+        return {
+            name,
+            role: roleNames[roleIdentifier], // Convertit l'identifiant en nom lisible
+            roleIdentifier,
+            alive: true,
+            deathDay: null
+        };
+    });
+};
 
 function Jeu() {
     // État des joueurs : { nom, rôle, vivant, jourDeMort }
@@ -86,6 +118,67 @@ function Jeu() {
             // Logique de suppression du joueur ici
         });
     }
+    const [messages, setMessages] = useState([]);
+    const [activeTab, setActiveTab] = useState("general");
+
+    const addMessage = (message) => {
+        setMessages(prev => [...prev, message]);
+    };
+
+    const startFirstPhase = async () => {
+        setCurrentInfo("Distribution des rôles...");
+        const numPlayers = 10; // Nombre de joueurs entre 8 et 12
+        setPlayers(assignRoles(players.map(p => p.name), numPlayers));
+
+        setTimeout(() => {
+            setCurrentInfo("La nuit tombe sur le village...");
+        }, 3000);
+
+        setTimeout(() => {
+            openModal("voleur_swap", (selected) => {
+                console.log("Le voleur a choisi :", selected);
+            });
+        }, 6000);
+
+        setTimeout(() => {
+            openModal("cupidon_love", (selected) => {
+                console.log("Cupidon a uni :", selected);
+            });
+        }, 9000);
+
+        setTimeout(() => {
+            openModal("voyante_peek", (selected) => {
+                console.log("La voyante a regardé :", selected);
+            });
+        }, 12000);
+
+        setTimeout(() => {
+            setCurrentInfo("Les Loups-Garous se réveillent...");
+        }, 15000);
+
+        setTimeout(() => {
+            openModal("loup_kill", (selected) => {
+                console.log("Les Loups-Garous ont voté pour tuer :", selected);
+            });
+        }, 18000);
+
+        setTimeout(() => {
+            setCurrentInfo("Les Loups-Garous se rendorment...");
+        }, 21000);
+
+        setTimeout(() => {
+            openModal("sorciere_kill", (selected) => {
+                console.log("La sorcière a utilisé la potion de mort sur :", selected);
+            });
+            openModal("sorciere_save", (selected) => {
+                console.log("La sorcière a sauvé :", selected);
+            });
+        }, 24000);
+
+        setTimeout(() => {
+            setCurrentInfo("Le jour se lève, les villageois découvrent qui est mort...");
+        }, 27000);
+    };
 
     return (
         <>
@@ -104,10 +197,10 @@ function Jeu() {
                         closeModal();
                     }}
                 />
-                <Info openNightModal={openNightModal} currentInfo={currentInfo}/>
+                <Info startFirstPhase={startFirstPhase} openNightModal={openNightModal} currentInfo={currentInfo}/>
                 <Player me={me} />
                 <Board players={players} setPlayers={setPlayers}/>
-                <Chat/>
+                <Chat messages={messages} addMessage={addMessage} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
         </>
     );
