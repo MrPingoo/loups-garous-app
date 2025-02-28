@@ -5,8 +5,8 @@ function Chat({ messages, addMessage, activeTab, setActiveTab }) {
         <div className="chat-box">
             <div className="chat-tabs">
                 <div onClick={() => setActiveTab("general")} className={"tab " + (activeTab === 'general' ? 'active' : "")}>Général</div>
-                <div onClick={() => setActiveTab("village")} className={"tab " + (activeTab === 'village' ? 'active' : "")}>Loups</div>
-                <div onClick={() => setActiveTab("loups")} className={"tab " + (activeTab === 'loups' ? 'active' : "")}>Village</div>
+                <div onClick={() => setActiveTab("village")} className={"tab " + (activeTab === 'village' ? 'active' : "")}>Village</div>
+                <div onClick={() => setActiveTab("loups")} className={"tab " + (activeTab === 'loups' ? 'active' : "")}>Loups</div>
             </div>
             <div className="chat-content">
                 {/*

@@ -72,6 +72,13 @@ function Jeu() {
         return () => clearInterval(interval); // Nettoyage
     }, [isRunning]);
 
+    useEffect(() => {
+        if (isGameOver(players)) {
+            setCurrentInfo("La partie est terminée !");
+            setIsRunning(false); // Stopper le jeu
+        }
+    }, [players]);
+
     // Calculer l'heure et les minutes IG
     const hours = Math.floor(gameTime % 24);
     const minutes = Math.floor((gameTime * 60) % 60);
@@ -195,6 +202,19 @@ function Jeu() {
             );
             setCurrentInfo(`${mostVoted} a été éliminé.`);
         }
+    };
+
+    const isGameOver = (players) => {
+        // Filtrer les joueurs vivants
+        const alivePlayers = players.filter(player => player.alive);
+
+        // Vérifier si tous les survivants sont des loups-garous
+        const allWolves = alivePlayers.every(player => player.roleIdentifier === "loup");
+
+        // Vérifier s'il ne reste plus de loups-garous (donc que des villageois)
+        const noWolvesLeft = !alivePlayers.some(player => player.roleIdentifier === "loup");
+
+        return allWolves || noWolvesLeft;
     };
 
     // Déroulement du jeu avec les phases de vote
