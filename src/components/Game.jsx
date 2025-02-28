@@ -60,6 +60,7 @@ function Jeu() {
     const [gameTime, setGameTime] = useState(6); // 00:00 au début
     const [isRunning, setIsRunning] = useState(true); // Timer actif par défaut
     const [currentInfo, setCurrentInfo] = useState("Le jour se lève, sur le village ..."); // Info courante
+    const [currentStep, setCurrentStep] = useState(0);
 
     useEffect(() => {
         if (!isRunning) return; // Pause du timer
@@ -154,6 +155,15 @@ function Jeu() {
             if (data.votes) {
                 handleVotes(data.votes);
             }
+            if (data.discussions) {
+                data.discussions.forEach((message) => {
+                    addMessage({
+                        sender: message.joueur,
+                        content: message.message,
+                        tab: (voteType == 'nuit') ? "loups" : "village",
+                    });
+                });
+            }
         } catch (error) {
             console.error("Erreur lors de l'appel API :", error);
         }
@@ -185,48 +195,40 @@ function Jeu() {
 
     // Déroulement du jeu avec les phases de vote
     const startFirstPhase = () => {
-        setCurrentInfo("Distribution des rôles...");
-        setPlayers(assignRoles(players.map(p => p.name), 10));
-
-        // fetchVotesFromAPI("nuit");
-
-        setTimeout(() => {
+        setCurrentStep(currentStep + 1);
+        console.log(currentStep);
+        if (currentStep == 0) {
+            setCurrentInfo("Distribution des rôles...");
+            setPlayers(assignRoles(players.map(p => p.name), 10));
+        }
+        if (currentStep == 1) {
             setCurrentInfo("La nuit tombe sur le village...");
-        }, 3000);
-
-        if (me.roleIdentifier == 'loup') {
-            setTimeout(() => {
+        }
+        if (currentStep == 2) {
+            if (me.roleIdentifier == 'loup') {
+                setCurrentInfo("Les loups font leurs choix...");
                 openModal("loup_kill", (selected) => {
                     console.log("Mon choix :", selected);
                     fetchVotesFromAPI("nuit", selected);
                 });
-            }, 6000);
+            } else {
+                setCurrentInfo("Les loups sont de retours !");
+            }
         }
 
-        setTimeout(() => {
-            setCurrentInfo("Le jour se lève sur le village...");
-        }, 10000);
-
-        setTimeout(() => {
-            openModal("villageois_kill", (selected) => {
-                console.log("Mon choix :", selected);
-                fetchVotesFromAPI("jour", selected);
+        if (currentStep == 3) {
+            setTimeout(() => {
+                setCurrentInfo("Les villageois font leurs choix...");
+                openModal("villageois_kill", (selected) => {
+                    console.log("Mon choix :", selected);
+                    fetchVotesFromAPI("jour", selected);
+                });
             });
-        }, 12000);
-
-        /*
-        setTimeout(() => {
-            fetchVotesFromAPI("nuit");
-        }, 8000);
-
-        setTimeout(() => {
-            setCurrentInfo("Le jour se lève, les villageois découvrent qui est mort...");
-        }, 12000);
-
-        setTimeout(() => {
-            fetchVotesFromAPI("jour");
-        }, 16000);
-         */
+        }
+        if (currentStep == 4){
+            setCurrentStep(1);
+            setCurrentInfo("Une nouvelle journée va commencer !");
+        }
     };
 
     return (
@@ -246,7 +248,7 @@ function Jeu() {
                         closeModal();
                     }}
                 />
-                <Info startFirstPhase={startFirstPhase} openNightModal={openNightModal} currentInfo={currentInfo}/>
+                <Info currentStep={currentStep} startFirstPhase={startFirstPhase} openNightModal={openNightModal} currentInfo={currentInfo}/>
                 <Player me={me} />
                 <Board players={players} setPlayers={setPlayers}/>
                 <Chat messages={messages} addMessage={addMessage} activeTab={activeTab} setActiveTab={setActiveTab} />
