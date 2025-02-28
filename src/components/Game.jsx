@@ -44,7 +44,7 @@ function Jeu() {
     const [players, setPlayers] = useState([
         { name: "Alice", role: "Loup-Garou", roleIdentifier: "loup", alive: true, deathDay: null },
         { name: "Bob", role: "Sorcière", roleIdentifier: "sorciere", alive: true, deathDay: null },
-        { name: "Charlie", role: "Voyante", roleIdentifier: "voyante", alive: false, deathDay: null },
+        { name: "Charlie", role: "Voyante", roleIdentifier: "voyante", alive: false, deathDay: 1 },
         { name: "David", role: "Chasseur", roleIdentifier: "chasseur", alive: true, deathDay: null }
     ]);
     const me = { name: "Me", role: "Loup-Garou", roleIdentifier: "loup",alive: true, deathDay: null,
@@ -125,59 +125,96 @@ function Jeu() {
         setMessages(prev => [...prev, message]);
     };
 
-    const startFirstPhase = async () => {
+    // API Call pour récupérer les votes
+    const fetchVotesFromAPI = async (voteType) => {
+        const livingPlayers = players.filter(p => p.alive);
+        const morts = players.filter(p => !p.alive).map(p => ({ nom: p.name, tour: p.deathDay }));
+
+        const payload = {
+            joueurs: livingPlayers.map(p => ({ nom: p.name, role: p.role })),
+            morts: morts,
+            vote_joueur: "Bob"
+        };
+
+        console.log(`📡 Envoi du vote (${voteType}) à l'API:`, payload);
+
+        try {
+            const response = await fetch("https://api-iut.codecodex.fr/", {
+                /*mode: 'no-cors',*/
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            console.log("📩 Réponse API :", data);
+
+            if (data.votes) {
+                handleVotes(data.votes);
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'appel API :", error);
+        }
+    };
+
+    // Gestion des votes retournés par l'API
+    const handleVotes = (votes) => {
+        votes.forEach(({ votant, vote_pour }) => {
+            console.log(`${votant} a voté pour ${vote_pour}`);
+        });
+
+        // Compter les votes et éliminer le joueur avec le plus de votes
+        const voteCount = votes.reduce((acc, { vote_pour }) => {
+            acc[vote_pour] = (acc[vote_pour] || 0) + 1;
+            return acc;
+        }, {});
+
+        const sortedVotes = Object.entries(voteCount).sort((a, b) => b[1] - a[1]);
+        const mostVoted = sortedVotes.length ? sortedVotes[0][0] : null;
+
+        if (mostVoted) {
+            console.log(`🚨 ${mostVoted} a été éliminé !`);
+            setPlayers(prev =>
+                prev.map(p => p.name === mostVoted ? { ...p, alive: false, deathDay: gameTime } : p)
+            );
+            setCurrentInfo(`${mostVoted} a été éliminé.`);
+        }
+    };
+
+    // Déroulement du jeu avec les phases de vote
+    const startFirstPhase = () => {
         setCurrentInfo("Distribution des rôles...");
-        const numPlayers = 10; // Nombre de joueurs entre 8 et 12
-        setPlayers(assignRoles(players.map(p => p.name), numPlayers));
+        setPlayers(assignRoles(players.map(p => p.name), 10));
+
+        // fetchVotesFromAPI("nuit");
 
         setTimeout(() => {
             setCurrentInfo("La nuit tombe sur le village...");
         }, 3000);
 
-        setTimeout(() => {
-            openModal("voleur_swap", (selected) => {
-                console.log("Le voleur a choisi :", selected);
-            });
-        }, 6000);
-
-        setTimeout(() => {
-            openModal("cupidon_love", (selected) => {
-                console.log("Cupidon a uni :", selected);
-            });
-        }, 9000);
-
-        setTimeout(() => {
-            openModal("voyante_peek", (selected) => {
-                console.log("La voyante a regardé :", selected);
-            });
-        }, 12000);
-
-        setTimeout(() => {
-            setCurrentInfo("Les Loups-Garous se réveillent...");
-        }, 15000);
 
         setTimeout(() => {
             openModal("loup_kill", (selected) => {
-                console.log("Les Loups-Garous ont voté pour tuer :", selected);
+                console.log("Mon choix :", selected);
+                fetchVotesFromAPI("nuit");
             });
-        }, 18000);
+        }, 6000);
 
+        /*
         setTimeout(() => {
-            setCurrentInfo("Les Loups-Garous se rendorment...");
-        }, 21000);
-
-        setTimeout(() => {
-            openModal("sorciere_kill", (selected) => {
-                console.log("La sorcière a utilisé la potion de mort sur :", selected);
-            });
-            openModal("sorciere_save", (selected) => {
-                console.log("La sorcière a sauvé :", selected);
-            });
-        }, 24000);
+            fetchVotesFromAPI("nuit");
+        }, 8000);
 
         setTimeout(() => {
             setCurrentInfo("Le jour se lève, les villageois découvrent qui est mort...");
-        }, 27000);
+        }, 12000);
+
+        setTimeout(() => {
+            fetchVotesFromAPI("jour");
+        }, 16000);
+         */
     };
 
     return (
