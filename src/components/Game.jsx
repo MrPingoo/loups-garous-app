@@ -198,7 +198,7 @@ function Jeu() {
     };
 
     // Déroulement du jeu avec les phases de vote
-    const startFirstPhase = () => {
+    const startPhase = () => {
         setCurrentStep(currentStep + 1);
         console.log(currentStep);
         if (currentStep == 0) {
@@ -252,7 +252,7 @@ function Jeu() {
                         closeModal();
                     }}
                 />
-                <Info currentStep={currentStep} startFirstPhase={startFirstPhase} openNightModal={openNightModal} currentInfo={currentInfo}/>
+                <Info currentStep={currentStep} startFirstPhase={startPhase} openNightModal={openNightModal} currentInfo={currentInfo}/>
                 <Player me={me} />
                 <Board players={players} setPlayers={setPlayers}/>
                 <Chat messages={messages} addMessage={addMessage} activeTab={activeTab} setActiveTab={setActiveTab} />
