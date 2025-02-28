@@ -119,7 +119,11 @@ function Jeu() {
             // Logique de suppression du joueur ici
         });
     }
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([
+        {"content": "Chat des loups", "sender": "Système", "tab": "loups"},
+        {"content": "Chat du village", "sender": "Système", "tab": "village"},
+        {"content": "Chat général", "sender": "Système", "tab": "general"},
+    ]);
     const [activeTab, setActiveTab] = useState("general");
 
     const addMessage = (message) => {
@@ -160,7 +164,7 @@ function Jeu() {
                     addMessage({
                         sender: message.joueur,
                         content: message.message,
-                        tab: (voteType == 'nuit') ? "loups" : "village",
+                        tab: (voteType === 'nuit') ? "loups" : "village"
                     });
                 });
             }
