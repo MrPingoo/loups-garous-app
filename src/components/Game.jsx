@@ -44,7 +44,7 @@ function Jeu() {
     const [players, setPlayers] = useState([
         { name: "Alice", role: "Loup-Garou", roleIdentifier: "loup", alive: true, deathDay: null },
         { name: "Bob", role: "Sorcière", roleIdentifier: "sorciere", alive: true, deathDay: null },
-        { name: "Charlie", role: "Voyante", roleIdentifier: "voyante", alive: false, deathDay: 1 },
+        { name: "Charlie", role: "Voyante", roleIdentifier: "voyante", alive: true, deathDay: null },
         { name: "David", role: "Chasseur", roleIdentifier: "chasseur", alive: true, deathDay: null }
     ]);
     const me = { name: "Me", role: "Loup-Garou", roleIdentifier: "loup",alive: true, deathDay: null,
@@ -126,14 +126,14 @@ function Jeu() {
     };
 
     // API Call pour récupérer les votes
-    const fetchVotesFromAPI = async (voteType) => {
+    const fetchVotesFromAPI = async (voteType, selected) => {
         const livingPlayers = players.filter(p => p.alive);
         const morts = players.filter(p => !p.alive).map(p => ({ nom: p.name, tour: p.deathDay }));
 
         const payload = {
             joueurs: livingPlayers.map(p => ({ nom: p.name, role: p.role })),
             morts: morts,
-            vote_joueur: "Bob"
+            vote_joueur: selected[0].name
         };
 
         console.log(`📡 Envoi du vote (${voteType}) à l'API:`, payload);
@@ -194,13 +194,25 @@ function Jeu() {
             setCurrentInfo("La nuit tombe sur le village...");
         }, 3000);
 
+        if (me.roleIdentifier == 'loup') {
+            setTimeout(() => {
+                openModal("loup_kill", (selected) => {
+                    console.log("Mon choix :", selected);
+                    fetchVotesFromAPI("nuit", selected);
+                });
+            }, 6000);
+        }
 
         setTimeout(() => {
-            openModal("loup_kill", (selected) => {
+            setCurrentInfo("Le jour se lève sur le village...");
+        }, 10000);
+
+        setTimeout(() => {
+            openModal("villageois_kill", (selected) => {
                 console.log("Mon choix :", selected);
-                fetchVotesFromAPI("nuit");
+                fetchVotesFromAPI("jour", selected);
             });
-        }, 6000);
+        }, 12000);
 
         /*
         setTimeout(() => {
